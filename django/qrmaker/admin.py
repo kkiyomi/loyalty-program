@@ -1,8 +1,10 @@
 from django.contrib import admin
 from .models import *
 
+from qrmaker.extra import PromoActionChoices
 
-class PromoAdmin(admin.ModelAdmin):
+
+class PromoAdmin(admin.ModelAdmin, PromoActionChoices):
     list_display = ("title", "maker", "date_added", "state")
     search_fields = ("uid", "state", "title")
     readonly_fields = ()
@@ -17,31 +19,6 @@ class PromoAdmin(admin.ModelAdmin):
         "make_delete",
         "make_complete",
     ]
-
-    def make_published(self, request, queryset):
-        queryset.update(state="Published")
-
-    make_published.short_description = "Mark as Published"
-
-    def make_pending(self, request, queryset):
-        queryset.update(state="Pending")
-
-    make_pending.short_description = "Mark as Pending"
-
-    def make_archive(self, request, queryset):
-        queryset.update(state="Archived")
-
-    make_archive.short_description = "Mark as Archived"
-
-    def make_delete(self, request, queryset):
-        queryset.update(state="Deleted")
-
-    make_delete.short_description = "Mark as Deleted"
-
-    def make_complete(self, request, queryset):
-        queryset.update(state="Completed")
-
-    make_complete.short_description = "Mark as Completed"
 
 
 class MakerAdmin(admin.ModelAdmin):

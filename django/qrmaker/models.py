@@ -42,6 +42,7 @@ class Promo(models.Model):
     date_added = models.DateTimeField(default=timezone.now)
 
     uid = models.CharField(default="", editable=False, max_length=100)
+    suid = models.CharField(default="N/A", max_length=100)
 
     state = models.CharField(
         max_length=20, choices=PromoState.choices, default=PromoState.Pending
@@ -57,6 +58,10 @@ class Promo(models.Model):
 
         if self.uid == "":
             self.uid = uuid.uuid4().hex
+
+        if self.suid == "N/A":
+            self.suid = self.uid[:10]
+
         if self.title == "N/A":
             self.title = "Promo_" + self.uid[:7]
 
