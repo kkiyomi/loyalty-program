@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 
-from MyQR import myqr as mq
 import uuid
 
 
@@ -14,6 +14,10 @@ class Maker(models.Model):
     date_added = models.DateTimeField(default=timezone.now)
 
     uid = models.CharField(default="", editable=False, max_length=100)
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, default=3, on_delete=models.CASCADE
+    )
 
     def save(self, *args, **kwargs):
 
@@ -92,7 +96,7 @@ class PromoInstance(models.Model):
         if self.uid == "":
             self.uid = uuid.uuid4().hex
         if self.title == "N/A":
-            self.title = "PromoInstance_" + self.uid[:7]
+            self.title = "Promo_Instance_" + self.uid[:7]
 
         super(PromoInstance, self).save(*args, **kwargs)
 

@@ -3,7 +3,7 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 
 from qrmaker.models import *
-from qrmaker.api.serializers import *
+from qrmaker.api.promo.serializers import *
 
 
 class PromoCreateTests(APITestCase):

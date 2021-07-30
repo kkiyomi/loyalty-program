@@ -7,26 +7,22 @@ from qrmaker.models import *
 class MakerPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         maker_uid = request.resolver_match.kwargs.get("maker_uid")
-        promo_uid = request.resolver_match.kwargs.get("promo_uid")
-
         maker = Maker.objects.filter(uid=maker_uid).exists()
+        return maker
+
+
+class PromoPermission(permissions.BasePermission):
+    def has_permission(self, request, view):
+        promo_uid = request.resolver_match.kwargs.get("promo_uid")
         promo = Promo.objects.filter(uid=promo_uid).exists()
-        if request.method == "POST":
-            return maker
-        return maker and promo
+        return promo
 
 
-class FilteredListSerializer(serializers.ListSerializer):
-    def to_representation(self, data):
-        data = data.exclude(state__in=["Deleted", "Archived"])
-        return super(FilteredListSerializer, self).to_representation(data)
-
-
-class PromoListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Promo
-        list_serializer_class = FilteredListSerializer
-        fields = ["uid", "state", "size", "date_added"]
+class PInstancePermission(permissions.BasePermission):
+    def has_permission(self, request, view):
+        promo_suid = request.resolver_match.kwargs.get("promo_suid")
+        promo = Promo.objects.filter(suid=promo_suid).exists()
+        return promo
 
 
 class PromoActionChoices:
