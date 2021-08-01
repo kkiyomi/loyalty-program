@@ -16,7 +16,7 @@ class RegistrationCreateAPIView(generics.CreateAPIView):
         serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            account = Account.objects.get(username=serializer.data["username"])
+            account = Account.objects.get(email=serializer.data["email"])
             token = Token.objects.get(user=account.pk).key
             resp = {
                 "data": serializer.data,

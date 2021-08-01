@@ -16,7 +16,7 @@ class Maker(models.Model):
     uid = models.CharField(default="", editable=False, max_length=100)
 
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, default=3, on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True
     )
 
     def save(self, *args, **kwargs):
