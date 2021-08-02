@@ -37,6 +37,7 @@ class MyAccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser):
+    username = models.CharField(default="User_", max_length=60)
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
