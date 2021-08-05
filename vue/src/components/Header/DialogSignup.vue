@@ -25,7 +25,7 @@
         Sign up
       </button>
     </div>
-    <TransitionRoot appear :show="isOpen" as="template">
+    <TransitionRoot appear :show="signupIsOpen" as="template">
       <Dialog as="div" @close="closeModal">
         <DialogOverlay class="fixed inset-0 bg-black opacity-70" />
         <div class="fixed inset-0 z-10 overflow-y-auto">
@@ -117,13 +117,15 @@
 </template>
 
 <script>
-import { ref } from 'vue'
 import {
   TransitionRoot,
   TransitionChild,
   Dialog,
   DialogOverlay,
 } from '@headlessui/vue'
+
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 
 import Signup from './Signup.vue'
 
@@ -138,15 +140,16 @@ export default {
   },
 
   setup() {
-    const isOpen = ref(false)
+    const store = useStore()
+    const signupIsOpen = computed(() => store.state.settings.signupIsOpen)
 
     return {
-      isOpen,
+      signupIsOpen,
       closeModal() {
-        isOpen.value = false
+        store.commit('SET_SIGNUP_DIALOG', false)
       },
       openModal() {
-        isOpen.value = true
+        store.commit('SET_SIGNUP_DIALOG', true)
       },
     }
   },

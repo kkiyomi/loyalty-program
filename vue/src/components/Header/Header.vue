@@ -70,6 +70,7 @@
         <!-- Top Right -->
         <div>
           <HeaderLoginSignup
+            v-if="!token"
             class="hidden sm:flex items-center justify-end md:flex-1 lg:w-0"
           />
         </div>
@@ -297,6 +298,7 @@ export default {
   },
   setup() {
     const store = useStore()
+    const token = computed(() => store.state.user.token)
 
     const darkMode = computed(() => store.state.user.darkMode)
 
@@ -317,6 +319,7 @@ export default {
       settings,
       switchMode,
       open,
+      token,
     }
   },
 }

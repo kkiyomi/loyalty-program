@@ -3,19 +3,20 @@
     <div>
       <button
         type="button"
-        @click="isOpen = true"
+        @click="openModal"
         class="
           whitespace-nowrap
           text-base
           font-medium
           text-gray-500
           hover:text-gray-900
+          dark:hover:text-gray-200
         "
       >
         Sign in
       </button>
     </div>
-    <TransitionRoot appear :show="isOpen" as="template">
+    <TransitionRoot appear :show="signinIsOpen" as="template">
       <Dialog as="div" @close="closeModal">
         <DialogOverlay class="fixed inset-0 bg-black opacity-70" />
         <div class="fixed inset-0 z-10 overflow-y-auto">
@@ -130,24 +131,17 @@ export default {
   },
 
   setup() {
-    const isOpen = ref(false)
-
     const store = useStore()
-    const token = computed(() => store.state.user.token)
-
-    const closeModal = () => {
-      isOpen.value = false
-    }
-
-    watch(token, (currentValue, oldValue) => {
-      if (token.value != null) {
-        closeModal()
-      }
-    })
+    const signinIsOpen = computed(() => store.state.settings.signinIsOpen)
 
     return {
-      isOpen,
-      closeModal,
+      signinIsOpen,
+      closeModal() {
+        store.commit('SET_SIGNIN_DIALOG', false)
+      },
+      openModal() {
+        store.commit('SET_SIGNIN_DIALOG', true)
+      },
     }
   },
 }

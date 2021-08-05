@@ -110,6 +110,5 @@ export default {
             dispatch('setUserCookie', token)
             dispatch('UserInfo')
         },
-
     },
 }
