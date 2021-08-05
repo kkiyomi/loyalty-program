@@ -13,13 +13,7 @@ class _PromoListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Promo
         list_serializer_class = _FilteredListSerializer
-        fields = ["uid", "suid", "state", "size", "date_added"]
-
-
-class MakerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Maker
-        fields = ["id", "username", "uid", "date_added"]
+        fields = ["title", "description", "uid", "suid", "state", "size", "date_added"]
 
 
 class MakerDetailSerializer(serializers.ModelSerializer):
