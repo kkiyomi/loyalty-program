@@ -1,0 +1,57 @@
+<template>
+  <div class="p-2 sm:w-10/12">
+    <h1>Home</h1>
+    <h1>userState : {{ user }}</h1>
+    <h1>token : {{ token }}</h1>
+    <h1>headers : {{ headers }}</h1>
+    <div v-if="user.user && maker">
+      <h1>user : {{ user.user.email }}</h1>
+      <h1>maker : {{ maker }}</h1>
+      <h1>promos : {{ promos }}</h1>
+    </div>
+    <button @click="delUserCookie" class="bg-red-500">delete cookie</button>
+    <button @click="UserTokenLogin" class="m-10 bg-red-500">login</button>
+  </div>
+</template>
+
+<script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
+export default {
+  name: 'Home',
+  components: {},
+  setup() {
+    const store = useStore()
+    const user = computed(() => store.state.user)
+    const token = computed(() => store.state.user.token)
+    const headers = computed(() => store.getters.headers)
+
+    const UserTokenLogin = async () => {
+      const token = '63a9f042049952f3cfa5bc8df35bc91e62d34e30'
+      await store.dispatch('UserTokenLogin', token)
+      store.dispatch('getMaker')
+    }
+
+    const delUserCookie = () => {
+      store.dispatch('UserSignout')
+      store.dispatch('delMaker')
+    }
+    const maker = computed(() => store.state.qrmaker.maker)
+    const promos = computed(() => store.state.qrmaker.maker.promos)
+
+    const huminizeDate = (date) => date.split('T')[0]
+
+    return {
+      UserTokenLogin,
+      delUserCookie,
+      huminizeDate,
+      maker,
+      promos,
+      user,
+      token,
+      headers,
+    }
+  },
+}
+</script>

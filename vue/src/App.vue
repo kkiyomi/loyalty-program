@@ -1,5 +1,45 @@
 <template>
-    <div class="p-4">
-        <router-view />
+  <div :class="darkMode ? 'dark' : ''">
+    <Header />
+    <div
+      class="
+        pt-10
+        h-screen
+        flex
+        place-content-center
+        bg-gray-200
+        dark:bg-gray-700
+        dark:text-gray-100
+      "
+    >
+      <router-view />
     </div>
+  </div>
 </template>
+
+
+<script>
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+
+import Header from './components/Header/Header.vue'
+export default {
+  components: { Header },
+
+  setup() {
+    const store = useStore()
+    const darkMode = computed(() => store.state.user.darkMode)
+
+    const getCookies = () => store.dispatch('getCookies')
+    getCookies()
+
+    const token = computed(() => store.state.user.token)
+    if (token.value != null) {
+      store.dispatch('getMaker')
+    }
+    return {
+      darkMode,
+    }
+  },
+}
+</script>
