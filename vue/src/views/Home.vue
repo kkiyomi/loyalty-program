@@ -6,8 +6,10 @@
     <h1>headers : {{ headers }}</h1>
     <div v-if="user.user && maker">
       <h1>user : {{ user.user.email }}</h1>
+      <br />
       <h1>maker : {{ maker }}</h1>
-      <h1>promos : {{ promos }}</h1>
+      <br />
+      <h1>promos : {{ promos[0] }}</h1>
     </div>
     <button @click="delUserCookie" class="bg-red-500">delete cookie</button>
     <button @click="UserTokenLogin" class="m-10 bg-red-500">login</button>

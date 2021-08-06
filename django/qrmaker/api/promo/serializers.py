@@ -28,5 +28,5 @@ class PromoRUDSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Promo
-        fields = ["title", "description", "size", "uid", "suid", "pinstances"]
+        fields = ["title", "description", "size", "state", "uid", "suid", "pinstances"]
         read_only_fields = ["uid", "suid", "pinstances"]

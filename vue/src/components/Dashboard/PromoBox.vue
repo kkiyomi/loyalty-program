@@ -9,9 +9,7 @@
         <div class="p-4 rounded-3xl" :class="style.background">
           <div class="flex items-center justify-b justify-between">
             <span class="text-sm">{{ humanizeDate(item.date_added) }}</span>
-            <button>
-              <span class="text-sm">Edit</span>
-            </button>
+            <PromoEditMenu :promo="item" />
           </div>
           <div class="text-center mb-4 mt-5">
             <button class="w-full">
@@ -62,6 +60,8 @@
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 
+import PromoEditMenu from './PromoEditMenu.vue'
+
 const style2 = {
   background: 'bg-yellow-200',
   progressbar: 'bg-yellow-700',
@@ -78,6 +78,9 @@ const style = {
 
 export default {
   name: 'PromoBox',
+  components: {
+    PromoEditMenu,
+  },
 
   setup() {
     const store = useStore()

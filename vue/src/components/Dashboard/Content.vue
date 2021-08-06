@@ -21,6 +21,7 @@
           </div>
         </div>
         <div class="flex items-center mt-4 md:mt-0">
+          <PromoFormSlide />
           <button
             class="text-white p-2"
             :class="list_view ? 'bg-gray-700' : 'bg-transparent'"
@@ -84,15 +85,21 @@ import { ref, computed } from 'vue'
 
 import DashboardTable from './DashboardTable.vue'
 import PromoBox from './PromoBox.vue'
+import PromoFormSlide from './PromoFormSlide.vue'
 
 export default {
   name: 'Content',
 
-  components: { DashboardTable, PromoBox },
+  components: {
+    DashboardTable,
+    PromoBox,
+    PromoFormSlide,
+  },
   setup() {
     const store = useStore()
-    const list_view = ref(false)
     const maker = computed(() => store.state.qrmaker.maker)
+
+    const list_view = ref(false)
 
     return {
       maker,

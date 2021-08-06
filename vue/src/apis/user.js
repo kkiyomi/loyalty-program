@@ -16,4 +16,10 @@ export default {
     makerInfo() {
         return Api.get('qr/maker/', store.getters.headers)
     },
+    addPromo(maker_uid) {
+        return Api.post(`qr/maker/${maker_uid}/promo/`, store.getters.headers)
+    },
+    deletePromo(maker_uid, promo_uid) {
+        return Api.delete(`qr/promo/${maker_uid}/${promo_uid}/`, store.getters.headers)
+    },
 }

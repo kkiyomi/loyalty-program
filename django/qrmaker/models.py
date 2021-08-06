@@ -37,6 +37,7 @@ class PromoState(models.TextChoices):
     Pending = "Pending"
     Archived = "Archived"
     Completed = "Completed"
+    Closed = "Closed"
     Deleted = "Deleted"
 
 

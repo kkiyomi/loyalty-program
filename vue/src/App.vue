@@ -4,7 +4,8 @@
     <div
       class="
         pt-10
-        h-screen
+        min-h-screen
+        h-full
         flex
         place-content-center
         bg-gray-200

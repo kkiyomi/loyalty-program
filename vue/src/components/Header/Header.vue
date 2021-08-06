@@ -89,47 +89,34 @@
             space-x-3
           "
         >
-          <button class="w-6 h-6 relative" @click="switchMode">
-            <div v-if="!darkMode" class="bg-yellow-500 rounded-full">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="white"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                />
-              </svg>
-            </div>
-            <div v-else class="bg-gray-700 rounded-full">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="white"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                />
-              </svg>
-            </div>
+          <button
+            v-if="user"
+            @click="switchMode"
+            class="
+              p-1
+              rounded-full
+              text-gray-400
+              hover:text-black
+              dark:hover:text-white
+              focus:outline-none
+              focus:ring-2
+              focus:ring-offset-2
+              focus:ring-offset-gray-800
+              focus:ring-white
+            "
+          >
+            <SunIcon v-if="darkMode" class="h-6 w-6" aria-hidden="true" />
+            <MoonIcon v-else class="h-6 w-6" aria-hidden="true" />
           </button>
 
           <button
             v-if="user"
             class="
-              bg-gray-800
               p-1
               rounded-full
               text-gray-400
-              hover:text-white
+              hover:text-black
+              dark:hover:text-white
               focus:outline-none
               focus:ring-2
               focus:ring-offset-2
@@ -139,11 +126,11 @@
               sm:block
             "
           >
-            <span class="sr-only">View notifications</span>
             <BellIcon class="h-6 w-6" aria-hidden="true" />
           </button>
+
           <!-- Profile dropdown -->
-          <Menu v-if="user" as="div" class="ml-3 relative">
+          <Menu v-if="user" as="div" class="pl-2 relative">
             <div>
               <MenuButton
                 class="
@@ -159,9 +146,11 @@
                 "
               >
                 <span class="sr-only">Open user menu</span>
+                <!-- src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                   -->
                 <img
                   class="h-8 w-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  src="https://cdn.pixabay.com/photo/2018/08/25/11/20/abstract-3629844_960_720.jpg"
                   alt=""
                 />
               </MenuButton>
@@ -263,9 +252,14 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
-  Switch,
 } from '@headlessui/vue'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
+import {
+  SunIcon,
+  MoonIcon,
+  BellIcon,
+  MenuIcon,
+  XIcon,
+} from '@heroicons/vue/outline'
 
 import { watch, ref, computed } from 'vue'
 import { useStore } from 'vuex'
@@ -275,6 +269,7 @@ import HeaderLoginSignup from './HeaderLoginSignup.vue'
 const navigation = [
   { name: 'Home', href: 'Home' },
   { name: 'Dashboard', href: 'Dashboard' },
+  { name: 'test', href: 'test' },
 ]
 
 const settings = [
@@ -294,6 +289,8 @@ export default {
     BellIcon,
     MenuIcon,
     XIcon,
+    SunIcon,
+    MoonIcon,
     HeaderLoginSignup,
   },
   setup() {
@@ -301,7 +298,6 @@ export default {
     const token = computed(() => store.state.user.token)
 
     const darkMode = computed(() => store.state.user.darkMode)
-
     const setDarkmode = (data) => store.dispatch('setDarkmode', data)
     const switchMode = () => {
       setDarkmode(!darkMode.value)

@@ -38,11 +38,15 @@ class PromoActionChoices:
     def make_delete(self, request, queryset):
         queryset.update(state="Deleted")
 
+    def make_completed(self, request, queryset):
+        queryset.update(state="Completed")
+
     def make_complete(self, request, queryset):
         queryset.update(state="Completed")
 
     make_published.short_description = "Mark as Published"
     make_pending.short_description = "Mark as Pending"
     make_archive.short_description = "Mark as Archived"
+    make_completed.short_description = "Mark as Completed"
     make_delete.short_description = "Mark as Deleted"
     make_complete.short_description = "Mark as Completed"

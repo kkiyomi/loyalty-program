@@ -155,9 +155,14 @@
         </div>
       </div>
       <div>
-        <p class="text-sm text-center sm:px-6 text-coolGray-400">
+        <p class="text-sm text-center sm:px-6 text-gray-600">
           Already have an account?
-          <a href="#" class="underline text-coolGray-600">Sign in</a>
+          <button
+            @click="moveToSignin"
+            class="underline text-bold text-gray-700"
+          >
+            Sign in
+          </button>
         </p>
       </div>
     </div>
@@ -177,6 +182,13 @@ export default {
   setup() {
     const store = useStore()
 
+    const moveToSignin = () => {
+      store.commit('SET_SIGNUP_DIALOG', false)
+      setTimeout(function () {
+        store.commit('SET_SIGNIN_DIALOG', true)
+      }, 300)
+    }
+
     const data = reactive({
       email: '',
       password1: '',
@@ -187,6 +199,7 @@ export default {
     return {
       data,
       UserRegister,
+      moveToSignin,
     }
   },
 }

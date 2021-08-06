@@ -32,3 +32,7 @@ class PromoRUDAPIView(
         # May raise a permission denied
         self.check_object_permissions(self.request, obj)
         return obj
+
+    def perform_destroy(self, instance):
+        instance.state = "Deleted"
+        instance.save()
