@@ -12,6 +12,7 @@
       as="template"
       :show="isOpen"
       :class="darkMode ? 'dark' : ''"
+      class="z-20"
     >
       <Dialog
         as="div"

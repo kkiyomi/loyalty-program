@@ -1,13 +1,13 @@
 <template>
   <div class="p-2 sm:w-10/12">
     <h1>Home</h1>
-    <h1>userState : {{ user }}</h1>
+    <h1>settings : {{ settings }}</h1>
     <h1>token : {{ token }}</h1>
-    <h1>headers : {{ headers }}</h1>
-    <div v-if="user.user && maker">
+    <div v-if="maker">
+      <h1>headers : {{ headers }}</h1>
       <h1>user : {{ user.user.email }}</h1>
+      <h1>maker uid: {{ maker.uid }}</h1>
       <br />
-      <h1>maker : {{ maker }}</h1>
       <br />
       <h1>promos : {{ promos[0] }}</h1>
     </div>
@@ -41,14 +41,16 @@ export default {
     }
     const maker = computed(() => store.state.qrmaker.maker)
     const promos = computed(() => store.state.qrmaker.maker.promos)
+    const settings = computed(() => store.state.settings)
 
     const huminizeDate = (date) => date.split('T')[0]
 
     return {
+      maker,
       UserTokenLogin,
       delUserCookie,
       huminizeDate,
-      maker,
+      settings,
       promos,
       user,
       token,

@@ -58,7 +58,7 @@
           <div class="px-1 py-1">
             <MenuItem v-slot="{ active }">
               <button
-                @click="test(promo)"
+                @click="promoEdit"
                 :class="[
                   active ? 'bg-indigo-500 text-white' : 'text-gray-900',
                   'group flex rounded-md items-center w-full px-2 py-2 text-sm',
@@ -128,11 +128,13 @@ export default {
   setup(props) {
     const store = useStore()
     const DeletePromo = (promo_uid) => store.dispatch('DeletePromo', promo_uid)
+    const promoEditing = computed(() => store.state.settings.promoEditing)
 
     return {
       DeletePromo,
-      test(data) {
-        console.log(data)
+      promoEditing,
+      promoEdit() {
+        store.commit('SET_PROMO_EDITING', props.promo.uid)
       },
     }
   },

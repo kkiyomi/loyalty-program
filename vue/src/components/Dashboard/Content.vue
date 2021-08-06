@@ -74,7 +74,11 @@
       </div>
 
       <DashboardTable v-if="list_view" />
-      <PromoBox v-else />
+      <div v-else class="flex flex-wrap">
+        <div v-for="item in promos" :key="item.id" class="w-full md:w-4/12">
+          <PromoBox :item="item" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -83,26 +87,27 @@
 import { useStore } from 'vuex'
 import { ref, computed } from 'vue'
 
-import DashboardTable from './DashboardTable.vue'
 import PromoBox from './PromoBox.vue'
+import DashboardTable from './DashboardTable.vue'
 import PromoFormSlide from './PromoFormSlide.vue'
 
 export default {
   name: 'Content',
 
   components: {
-    DashboardTable,
     PromoBox,
+    DashboardTable,
     PromoFormSlide,
   },
   setup() {
     const store = useStore()
     const maker = computed(() => store.state.qrmaker.maker)
-
+    const promos = computed(() => store.getters.promos)
     const list_view = ref(false)
 
     return {
       maker,
+      promos,
       list_view,
     }
   },

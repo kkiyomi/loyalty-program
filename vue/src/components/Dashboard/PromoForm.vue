@@ -150,8 +150,8 @@ export default {
       description: 'N/A',
       size: 1,
     })
-    const AddPromo = async (data) => {
-      await store.dispatch('AddPromo', data)
+    const AddPromo = async (promo_data) => {
+      await store.dispatch('AddPromo', promo_data)
     }
     return {
       data,

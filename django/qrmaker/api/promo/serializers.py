@@ -30,3 +30,9 @@ class PromoRUDSerializer(serializers.ModelSerializer):
         model = Promo
         fields = ["title", "description", "size", "state", "uid", "suid", "pinstances"]
         read_only_fields = ["uid", "suid", "pinstances"]
+
+    def to_internal_value(self, data):
+        for key in data.keys():
+            if data[key] == "":
+                data[key] = "N/A"
+        return super().to_internal_value(data)
