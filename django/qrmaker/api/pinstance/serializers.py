@@ -39,3 +39,12 @@ class PInstanceRetrieveSerializer(serializers.ModelSerializer):
         model = PromoInstance
         fields = ["title", "description", "uid", "promo", "transactions"]
         read_only_fields = ["uid", "promo", "transactions"]
+
+
+class PInstanceListSerializer(serializers.ModelSerializer):
+    transactions = _TransactionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = PromoInstance
+        fields = ["title", "date_added", "uid", "transactions"]
+        read_only_fields = ["uid", "transactions"]

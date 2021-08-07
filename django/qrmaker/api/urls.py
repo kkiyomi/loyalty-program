@@ -19,6 +19,11 @@ urlpatterns = [
         name="promo-update-destroy",
     ),
     path(
+        "instances/<promo_uid>/",
+        PInstanceListAPIView.as_view(),
+        name="pinstance-list",
+    ),
+    path(
         "code/<promo_suid>/",
         PInstanceCreateAPIView.as_view(),
         name="pinstance-create",

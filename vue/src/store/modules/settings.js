@@ -2,7 +2,7 @@ export default {
     state: () => ({
         signupIsOpen: false,
         signinIsOpen: false,
-        promoEditing: '5e9a4eca45e54cd286ff57c0339495a6'
+        promoEditing: ''
     }),
 
     getters: {

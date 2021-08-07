@@ -27,4 +27,7 @@ export default {
         const data = f_data.data
         return Api.patch(`qr/promo/${promo_uid}/`, data, store.getters.headers)
     },
+    instanceList(promo_uid) {
+        return Api.get(`qr/instances/${promo_uid}/`, store.getters.headers)
+    },
 }

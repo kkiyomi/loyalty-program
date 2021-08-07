@@ -269,7 +269,6 @@ import HeaderLoginSignup from './HeaderLoginSignup.vue'
 const navigation = [
   { name: 'Home', href: 'Home' },
   { name: 'Dashboard', href: 'Dashboard' },
-  { name: 'test', href: 'test' },
 ]
 
 const settings = [

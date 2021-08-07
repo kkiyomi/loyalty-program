@@ -13,9 +13,9 @@ const routes = [
         component: () => import('/src/views/Dashboard.vue'),
     },
     {
-        path: '/test',
+        path: '/test/:promo_uid',
         name: 'test',
-        component: () => import('/src/components/Dashboard/PromoForm.vue'),
+        component: () => import('/src/views/Promo.vue'),
     }
 ]
 

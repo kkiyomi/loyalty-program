@@ -3,17 +3,28 @@ import user from '../../apis/user'
 export default {
     state: () => ({
         maker: null,
+        promos: [],
+        instanceList: [],
     }),
 
     getters: {
         promos(state) {
-            return state.maker.promos
-        }
+            return state.promos
+        },
+        promo: (state) => (uid) => {
+            return state.promos.find((element) => element.uid == uid)
+        },
     },
 
     mutations: {
         SET_MAKER(state, payload) {
             state.maker = payload
+        },
+        SET_PROMOS(state, payload) {
+            state.promos = payload
+        },
+        SET_INSTANCE_LIST(state, payload) {
+            state.instanceList = payload
         },
     },
 
@@ -22,6 +33,7 @@ export default {
             await user.makerInfo().then(response => {
                 const maker = response.data
                 commit('SET_MAKER', maker)
+                commit('SET_PROMOS', maker.promos)
             })
         },
         delMaker({ commit }) {
@@ -40,6 +52,11 @@ export default {
         async PatchPromo({ dispatch }, data) {
             await user.patchPromo(data).then(() => {
                 dispatch('getMaker')
+            })
+        },
+        async getInstanceList({ commit }, promo_uid) {
+            await user.instanceList(promo_uid).then((response) => {
+                commit('SET_INSTANCE_LIST', response.data)
             })
         },
 

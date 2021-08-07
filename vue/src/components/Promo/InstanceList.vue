@@ -28,7 +28,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in promos" :key="item.id" class="bg-white">
+            <tr v-for="item in instanceList" :key="item.id" class="bg-white">
               <td class="text-sm text-gray-900 px-5 py-5">
                 <div class="flex items-center">
                   <div class="ml-3">
@@ -40,49 +40,16 @@
               </td>
               <td class="text-sm text-gray-900 px-5 py-5">
                 <p class="whitespace-no-wrap">
-                  {{ item.description }}
+                  {{ item.uid }}
                 </p>
               </td>
               <td class="text-sm text-gray-900 px-5 py-5">
-                <p class="whitespace-no-wrap">
-                  {{ item.suid }}
-                </p>
-              </td>
-              <td class="text-sm text-gray-900 px-5 py-5">
-                <p class="whitespace-no-wrap">
-                  {{ item.size }}
-                </p>
+                <p class="whitespace-no-wrap">transactions</p>
               </td>
               <td class="text-sm text-gray-900 px-5 py-5">
                 <p class="whitespace-no-wrap">
                   {{ humanizeDate(item.date_added) }}
                 </p>
-              </td>
-              <td class="text-sm px-5 py-5">
-                <span
-                  class="
-                    text-green-900
-                    font-semibold
-                    relative
-                    inline-block
-                    px-3
-                    py-1
-                    leading-tight
-                  "
-                >
-                  <span
-                    aria-hidden="true"
-                    class="
-                      bg-green-200
-                      opacity-50
-                      absolute
-                      inset-0
-                      rounded-full
-                    "
-                  >
-                  </span>
-                  <span class="relative"> {{ item.state }} </span>
-                </span>
               </td>
               <td class="text-sm px-5 py-5">
                 <a href="#" class="text-indigo-600, hover:text-indigo-900">
@@ -102,35 +69,26 @@ import { useStore } from 'vuex'
 import { computed } from 'vue'
 
 export default {
-  name: 'DashboardTable',
+  name: 'InstanceList',
   setup() {
     const headers = [
       { name: 'Title' },
-      { name: 'Discription' },
-      { name: 'Code' },
-      { name: 'Size' },
+      { name: 'uid' },
+      { name: 'transactions' },
       { name: 'Created at' },
-      { name: 'Status' },
-      { name: '' },
     ]
-    const users = [
-      {
-        name: 'Jean marc',
-        avatar: '/images/person/8.jpg',
-        role: 'Admin',
-        date: '01/10/2012',
-        status: 'active',
-      },
-    ]
+
     const store = useStore()
-    const promos = computed(() => store.getters.promos)
-    const humanizeDate = (date) => date.split('T')[0]
+    const instanceList = computed(() => store.state.qrmaker.instanceList)
+    const humanizeDate = (date) => {
+      const test = new Date(date)
+      return test.toLocaleString('en-GB', { timeZone: 'UTC' })
+    }
 
     return {
-      promos,
+      instanceList,
       headers,
       humanizeDate,
-      users,
     }
   },
 }

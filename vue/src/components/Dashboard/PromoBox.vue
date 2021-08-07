@@ -81,11 +81,24 @@
             "
           />
         </div>
-        <button v-else class="w-full">
+        <!-- <button v-else class="w-full">
           <p class="text-base font-bold opacity-70">
             {{ item.title }}
           </p>
-        </button>
+        </button> -->
+        <router-link
+          v-else
+          :to="{ name: 'test', params: { promo_uid: item.uid } }"
+          custom
+          v-slot="{ navigate }"
+        >
+          <button
+            class="text-base hover:bg-indigo-100 p-2 font-bold opacity-70"
+            @click="navigate"
+          >
+            {{ item.title }}
+          </button>
+        </router-link>
       </div>
       <div>
         <p class="text-sm font-bold m-0 flex justify-between">
@@ -264,7 +277,6 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue'
 import {
   Listbox,
   ListboxButton,
@@ -274,7 +286,7 @@ import {
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
 
 import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { reactive, ref, computed } from 'vue'
 
 import PromoEditMenu from './PromoEditMenu.vue'
 
@@ -340,7 +352,6 @@ export default {
         kwargs: props.item.uid,
         data: data,
       }
-      console.log(vdata)
       store.dispatch('PatchPromo', vdata)
       store.commit('SET_PROMO_EDITING', null)
     }
