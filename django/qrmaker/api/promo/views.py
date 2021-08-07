@@ -1,37 +1,26 @@
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 from .serializers import *
 
 from qrmaker.models import *
-from qrmaker.extra import MakerPermission, PromoPermission
+from qrmaker.extra import MakerPermission
 
 
 class PromoCreateAPIView(generics.CreateAPIView):
     queryset = Promo.objects.all()
     serializer_class = PromoCreateSerializer
-    permission_classes = [MakerPermission]
+    permission_classes = [IsAuthenticated, MakerPermission]
 
 
-class PromoRUDAPIView(
-    generics.RetrieveAPIView,
+class PromoUpdateDestroyAPIView(
     generics.UpdateAPIView,
     generics.DestroyAPIView,
 ):
     queryset = Promo.objects.all()
-    serializer_class = PromoRUDSerializer
-    permission_classes = [MakerPermission, PromoPermission]
-
-    def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        obj = queryset.get(
-            maker__uid=self.kwargs["maker_uid"],
-            uid=self.kwargs["promo_uid"],
-        )
-
-        # May raise a permission denied
-        self.check_object_permissions(self.request, obj)
-        return obj
+    serializer_class = PromoUpdateDestroySerializer
+    permission_classes = [IsAuthenticated, MakerPermission]
+    lookup_field = "uid"
 
     def perform_destroy(self, instance):
         instance.state = "Deleted"

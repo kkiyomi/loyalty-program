@@ -2,20 +2,12 @@ from rest_framework import permissions
 from rest_framework import serializers
 
 from qrmaker.models import *
+from users.models import *
 
 
 class MakerPermission(permissions.BasePermission):
-    def has_permission(self, request, view):
-        maker_uid = request.resolver_match.kwargs.get("maker_uid")
-        maker = Maker.objects.filter(uid=maker_uid).exists()
-        return maker
-
-
-class PromoPermission(permissions.BasePermission):
-    def has_permission(self, request, view):
-        promo_uid = request.resolver_match.kwargs.get("promo_uid")
-        promo = Promo.objects.filter(uid=promo_uid).exists()
-        return promo
+    def has_object_permission(self, request, view, obj):
+        return obj.maker.user == request.user
 
 
 class PInstancePermission(permissions.BasePermission):

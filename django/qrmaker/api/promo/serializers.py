@@ -17,13 +17,11 @@ class PromoCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         promo_data = validated_data.copy()
-        promo_data["maker"] = Maker.objects.get(
-            uid=self.context["view"].kwargs.get("maker_uid")
-        )
+        promo_data["maker"] = self.context["request"].user.maker
         return Promo.objects.create(**promo_data)
 
 
-class PromoRUDSerializer(serializers.ModelSerializer):
+class PromoUpdateDestroySerializer(serializers.ModelSerializer):
     pinstances = _InstanceListSerializer(many=True, read_only=True)
 
     class Meta:

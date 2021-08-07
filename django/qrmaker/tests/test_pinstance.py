@@ -2,28 +2,47 @@ from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
 
+from users.models import *
 from qrmaker.models import *
 from qrmaker.api.pinstance.serializers import *
 
 
 class PInstanceCreateTests(APITestCase):
     def setUp(self):
-        self.maker = Maker.objects.create(username="User_1")
+        self.user = Account.objects.create_user("username", "Pas$w0rd")
+        self.client.force_authenticate(self.user)
+
+        self.maker = self.user.maker
         self.promo = Promo.objects.create(maker=self.maker)
 
     def test_can_add_pinstance(self):
-        data = {}
         url = reverse("pinstance-create", args=[self.promo.suid])
 
-        response = self.client.post(url, data, format="json")
+        response = self.client.post(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(PromoInstance.objects.count(), 1)
         self.assertTrue("Promo_Instance_" in PromoInstance.objects.get().title)
 
-    # def test_wrong_add_promo(self):
-    #     data = {"title": "P_Instance_1", "description": "N/A", "size": 3}
-    #     url = reverse("promo-create", args=["random"])
+    def test_wrong_add_pinstance(self):
+        url = reverse("pinstance-create", args=["random"])
 
-    #     response = self.client.post(url, data, format="json")
-    #     self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-    #     self.assertEqual(Promo.objects.count(), 0)
+        response = self.client.post(url, format="json")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(PromoInstance.objects.count(), 0)
+
+
+class PInstanceRUDTests(APITestCase):
+    def setUp(self):
+        self.user = Account.objects.create_user("username", "Pas$w0rd")
+        self.client.force_authenticate(self.user)
+
+        self.maker = self.user.maker
+        self.promo = Promo.objects.create(maker=self.maker)
+        self.pinstance = PromoInstance.objects.create(promo=self.promo)
+
+    def test_can_get_pinstance(self):
+        url = reverse("pinstance-retrieve", args=[self.pinstance.uid])
+
+        response = self.client.get(url, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(PromoInstance.objects.count(), 1)

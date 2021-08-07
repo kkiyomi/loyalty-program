@@ -27,21 +27,18 @@ export default {
         delMaker({ commit }) {
             commit('SET_MAKER', null)
         },
-        async AddPromo({ dispatch, state }, data) {
-            const maker_uid = state.maker.uid
-            await user.addPromo(maker_uid, data).then(() => {
+        async AddPromo({ dispatch }, data) {
+            await user.addPromo(data).then(() => {
                 dispatch('getMaker')
             })
         },
-        async DeletePromo({ dispatch, state }, promo_uid) {
-            const maker_uid = state.maker.uid
-            await user.deletePromo(maker_uid, promo_uid).then(() => {
+        async DeletePromo({ dispatch }, promo_uid) {
+            await user.deletePromo(promo_uid).then(() => {
                 dispatch('getMaker')
             })
         },
-        async PatchPromo({ dispatch, state }, data) {
-            const maker_uid = state.maker.uid
-            await user.patchPromo(maker_uid, data).then(() => {
+        async PatchPromo({ dispatch }, data) {
+            await user.patchPromo(data).then(() => {
                 dispatch('getMaker')
             })
         },

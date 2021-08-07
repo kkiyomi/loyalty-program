@@ -15,12 +15,4 @@ class PInstanceCreateAPIView(generics.CreateAPIView):
 class PInstanceRetrieveAPIView(generics.RetrieveAPIView):
     queryset = PromoInstance.objects.all()
     serializer_class = PInstanceRetrieveSerializer
-
-    def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        obj = queryset.get(uid=self.kwargs["pinstance_uid"])
-
-        # May raise a permission denied
-        self.check_object_permissions(self.request, obj)
-        return obj
+    lookup_field = "uid"

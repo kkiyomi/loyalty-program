@@ -38,4 +38,4 @@ class PInstanceRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = PromoInstance
         fields = ["title", "description", "uid", "promo", "transactions"]
-        read_only_fields = ["uid", "promo"]
+        read_only_fields = ["uid", "promo", "transactions"]

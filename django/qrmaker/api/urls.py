@@ -9,14 +9,14 @@ from .transaction.views import *
 urlpatterns = [
     path("maker/", MakerRetrieveAPIView.as_view()),
     path(
-        "maker/<maker_uid>/promo/",
+        "promo/",
         PromoCreateAPIView.as_view(),
         name="promo-create",
     ),
     path(
-        "promo/<maker_uid>/<promo_uid>/",
-        PromoRUDAPIView.as_view(),
-        name="promo-rud",
+        "promo/<uid>/",
+        PromoUpdateDestroyAPIView.as_view(),
+        name="promo-update-destroy",
     ),
     path(
         "code/<promo_suid>/",
@@ -24,12 +24,12 @@ urlpatterns = [
         name="pinstance-create",
     ),
     path(
-        "instance/<pinstance_uid>/",
+        "instance/<uid>/",
         PInstanceRetrieveAPIView.as_view(),
-        name="pinstance-r",
+        name="pinstance-retrieve",
     ),
     path(
-        "transact/<pinstance_uid>/",
+        "add/<pinstance_uid>/",
         TransactionCreateAPIView.as_view(),
         name="transaction-create",
     ),

@@ -228,27 +228,31 @@
         </div>
       </div>
       <div>
-        <textarea
-          v-if="promoEditing == item.uid"
-          v-model="promo_data.description"
-          type="text"
-          class="
-            block
-            w-full
-            h-30
-            px-4
-            py-2
-            mt-2
-            text-gray-700
-            bg-white
-            text-sm
-            border border-gray-300
-            rounded-md
-            focus:border-blue-500
-            focus:outline-none
-            focus:ring
-          "
-        />
+        <section v-if="promoEditing == item.uid">
+          <label class="text-indigo-600 ml-2" for="description">
+            Description
+          </label>
+          <textarea
+            v-model="promo_data.description"
+            type="text"
+            class="
+              block
+              w-full
+              h-30
+              px-4
+              py-2
+              text-gray-700
+              bg-white
+              text-sm
+              border border-gray-300
+              rounded-md
+              focus:border-blue-500
+              focus:outline-none
+              focus:ring
+            "
+          />
+        </section>
+
         <button v-else-if="item.description != 'N/A'" class="w-full">
           <p class="text-sm text-left opacity-70 mt-2">
             {{ item.description }}
@@ -325,7 +329,8 @@ export default {
 
     const promo_data = reactive({
       title: props.item.title,
-      description: props.item.description,
+      description:
+        props.item.description == 'N/A' ? '' : props.item.description,
       size: props.item.size,
     })
 
