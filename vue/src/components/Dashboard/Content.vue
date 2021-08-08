@@ -8,16 +8,16 @@
       <div class="flex flex-wrap justify-between items-center pb-8">
         <div class="flex flex-wrap text-white">
           <div class="pr-10">
-            <div class="text-2xl font-bold">45</div>
-            <div class="">In Progress</div>
+            <div class="text-2xl font-bold">{{ maker.ts_count }}</div>
+            <div class="">Transactions</div>
           </div>
           <div class="pr-10">
-            <div class="text-2xl font-bold">24</div>
-            <div class="">Upcoming</div>
+            <div class="text-2xl font-bold">{{ maker.pi_count }}</div>
+            <div class="">Promo Instances</div>
           </div>
           <div>
-            <div class="text-2xl font-bold">62</div>
-            <div class="">Total Projects</div>
+            <div class="text-2xl font-bold">{{ maker.pr_count }}</div>
+            <div class="">Promos</div>
           </div>
         </div>
         <div class="flex items-center mt-4 md:mt-0">

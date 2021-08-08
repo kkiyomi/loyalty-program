@@ -33,6 +33,12 @@ export default {
     },
 
     actions: {
+        reset({ commit }) {
+            commit('SET_MAKER', null)
+            commit('SET_PROMOS', [])
+            commit('SET_INSTANCE_LIST', [])
+            commit('SET_TRANSACTION_LIST', [])
+        },
         async getMaker({ commit }) {
             await user.makerInfo().then(response => {
                 const maker = response.data

@@ -31,7 +31,10 @@ export default {
     },
 
     actions: {
-
+        reset({ commit }) {
+            commit('SET_USER', null)
+            commit('SET_TOKEN', null)
+        },
         setDarkmode({ commit, dispatch }, dark) {
             commit('SET_DARKMODE', dark)
             let theme = 'light'
@@ -39,6 +42,11 @@ export default {
                 theme = 'dark'
             }
             dispatch('setThemeCookie', theme)
+        },
+        UserSignout({ commit, dispatch }) {
+            commit('SET_USER', null)
+            commit('SET_TOKEN', null)
+            dispatch('delUserCookie')
         },
         async UserLogin({ commit, dispatch }, data) {
             // just to make it clear what data is sent
@@ -70,11 +78,6 @@ export default {
                 const userA = response.data
                 commit('SET_USER', userA)
             })
-        },
-        UserSignout({ commit, dispatch }) {
-            commit('SET_USER', null)
-            commit('SET_TOKEN', null)
-            dispatch('delUserCookie')
         },
         setUserCookie({ }, token) {
             Cookies.set('at', token, { secure: true })

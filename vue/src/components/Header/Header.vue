@@ -44,9 +44,7 @@
           <div class="hidden sm:block sm:ml-6">
             <div class="flex space-x-4">
               <router-link
-                v-for="item in navigation"
-                :key="item.name"
-                :to="{ name: item.href }"
+                :to="{ name: 'Home' }"
                 custom
                 v-slot="{ href, navigate, isActive }"
               >
@@ -61,7 +59,27 @@
                   @click="navigate"
                   :aria-current="isActive ? 'page' : undefined"
                 >
-                  {{ item.name }}
+                  Home
+                </a>
+              </router-link>
+              <router-link
+                :to="{ name: 'Dashboard' }"
+                v-if="token"
+                custom
+                v-slot="{ href, navigate, isActive }"
+              >
+                <a
+                  :class="[
+                    isActive
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-900 dark:text-gray-400 hover:bg-gray-700 hover:text-white',
+                    'px-3 py-2 rounded-md text-sm font-medium',
+                  ]"
+                  :href="href"
+                  @click="navigate"
+                  :aria-current="isActive ? 'page' : undefined"
+                >
+                  Dashboard
                 </a>
               </router-link>
             </div>
@@ -90,7 +108,6 @@
           "
         >
           <button
-            v-if="user"
             @click="switchMode"
             class="
               p-1
@@ -208,6 +225,17 @@
                     </a>
                   </router-link>
                 </MenuItem>
+                <MenuItem as="a" v-slot="{ active }">
+                  <button
+                    :class="[
+                      active ? 'bg-gray-100' : '',
+                      'block w-full px-4 py-2 text-sm text-left text-gray-700',
+                    ]"
+                    @click="UserSignout"
+                  >
+                    Sign out
+                  </button>
+                </MenuItem>
               </MenuItems>
             </transition>
           </Menu>
@@ -261,20 +289,13 @@ import {
   XIcon,
 } from '@heroicons/vue/outline'
 
-import { watch, ref, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 import HeaderLoginSignup from './HeaderLoginSignup.vue'
 
-const navigation = [
-  { name: 'Home', href: 'Home' },
-  { name: 'Dashboard', href: 'Dashboard' },
-]
-
-const settings = [
-  { name: 'Signin', href: 'Home' },
-  { name: 'Sign out', href: 'Home' },
-]
+const settings = [{ name: 'settings', href: 'Home' }]
 
 export default {
   components: {
@@ -303,14 +324,19 @@ export default {
     }
 
     const user = computed(() => store.state.user.user)
-    const UserSignout = () => store.dispatch('UserSignout')
+
+    const router = useRouter()
+    const UserSignout = () => {
+      store.dispatch('clearAll')
+      router.push({ name: 'Home' })
+    }
 
     const open = ref(false)
+
     return {
       user,
       UserSignout,
       darkMode,
-      navigation,
       settings,
       switchMode,
       open,

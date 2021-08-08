@@ -54,6 +54,7 @@ class Promo(models.Model):
     )
 
     size = models.PositiveSmallIntegerField(default=1)
+    target = models.IntegerField(default=10)
 
     maker = models.ForeignKey(
         Maker, on_delete=models.SET_NULL, related_name="promos", blank=True, null=True

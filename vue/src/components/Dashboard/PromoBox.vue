@@ -103,17 +103,17 @@
       <div>
         <p class="text-sm font-bold m-0 flex justify-between">
           Progress
-          <span>2/10 customers</span>
+          <span>{{ item.pi_count }}/{{ item.target }} customers</span>
         </p>
         <div class="w-full h-1 rounded-md overflow-hidden bg-white my-2 mx-0">
           <span
             class="block h-1 rounded-md"
-            :style="{ width: style.progress }"
+            :style="{ width: item.progress }"
             :class="[style.progressbar]"
           />
         </div>
         <p class="text-right m-0 text-sm font-bold">
-          {{ style.progress }}
+          {{ item.progress }}
         </p>
       </div>
       <div class="flex justify-between pt-4 relative">
@@ -291,17 +291,15 @@ import { reactive, ref, computed } from 'vue'
 import PromoEditMenu from './PromoEditMenu.vue'
 
 const style2 = {
-  background: 'bg-yellow-200',
+  background: 'bg-yellow-100',
   progressbar: 'bg-yellow-700',
   text: 'text-yellow-600',
-  progress: '20%',
 }
 
 const style = {
   background: 'bg-gray-200',
   progressbar: 'bg-indigo-700',
   text: 'text-indigo-600',
-  progress: '20%',
 }
 
 export default {

@@ -21,5 +21,10 @@ export default {
     },
 
     actions: {
+        reset({ commit }) {
+            commit('SET_SIGNUP_DIALOG', false)
+            commit('SET_SIGNIN_DIALOG', false)
+            commit('SET_PROMO_EDITING', null)
+        },
     },
 }

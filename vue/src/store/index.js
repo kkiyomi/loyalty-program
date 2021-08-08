@@ -9,6 +9,11 @@ const store = createStore({
         user,
         qrmaker,
     },
+    actions: {
+        clearAll({ dispatch }) {
+            dispatch("reset")
+        },
+    }
 })
 
 export default store
