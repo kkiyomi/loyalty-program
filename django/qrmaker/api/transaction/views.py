@@ -22,3 +22,17 @@ class TransactionRetrieveAPIView(generics.RetrieveAPIView):
         # May raise a permission denied
         self.check_object_permissions(self.request, obj)
         return obj
+
+
+class TransactionListAPIView(generics.ListAPIView):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionRetrieveSerializer
+
+    def get_queryset(self):
+        promo_uid = self.kwargs["promo_uid"]
+        queryset = Transaction.objects.filter(pinstance__promo__uid=promo_uid)
+        return queryset
+
+    def filter_queryset(self, queryset):
+        queryset = queryset.order_by("-date_added")
+        return queryset

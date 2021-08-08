@@ -12,7 +12,7 @@ class _PromoSerializer(serializers.ModelSerializer):
 class _TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ["title", "description", "uid"]
+        fields = ["uid", "date_added"]
 
 
 class PInstanceCreateSerializer(serializers.ModelSerializer):
@@ -48,3 +48,9 @@ class PInstanceListSerializer(serializers.ModelSerializer):
         model = PromoInstance
         fields = ["title", "date_added", "uid", "transactions"]
         read_only_fields = ["uid", "transactions"]
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation["ts_count"] = instance.transactions.count()
+
+        return representation

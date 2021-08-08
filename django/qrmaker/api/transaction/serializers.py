@@ -21,5 +21,4 @@ class TransactionCreateSerializer(serializers.ModelSerializer):
 class TransactionRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ["title", "description", "uid"]
-        read_only_fields = ["uid"]
+        fields = ["uid", "date_added"]

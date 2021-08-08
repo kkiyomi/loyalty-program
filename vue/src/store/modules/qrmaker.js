@@ -5,6 +5,7 @@ export default {
         maker: null,
         promos: [],
         instanceList: [],
+        transactionList: [],
     }),
 
     getters: {
@@ -25,6 +26,9 @@ export default {
         },
         SET_INSTANCE_LIST(state, payload) {
             state.instanceList = payload
+        },
+        SET_TRANSACTION_LIST(state, payload) {
+            state.transactionList = payload
         },
     },
 
@@ -57,6 +61,11 @@ export default {
         async getInstanceList({ commit }, promo_uid) {
             await user.instanceList(promo_uid).then((response) => {
                 commit('SET_INSTANCE_LIST', response.data)
+            })
+        },
+        async getTransactionList({ commit }, promo_uid) {
+            await user.transactionList(promo_uid).then((response) => {
+                commit('SET_TRANSACTION_LIST', response.data)
             })
         },
 

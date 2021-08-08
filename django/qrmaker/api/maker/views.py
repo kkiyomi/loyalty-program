@@ -14,8 +14,8 @@ class MakerRetrieveAPIView(generics.RetrieveAPIView):
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
 
-        token = self.request.META.get("HTTP_AUTHORIZATION").split(" ")[-1]
-        obj = queryset.get(user=Token.objects.get(key=token).user.id)
+        user = self.request.user
+        obj = queryset.get(user=user)
 
         self.check_object_permissions(self.request, obj)
         return obj

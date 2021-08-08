@@ -34,6 +34,11 @@ urlpatterns = [
         name="pinstance-retrieve",
     ),
     path(
+        "transactions/<promo_uid>/",
+        TransactionListAPIView.as_view(),
+        name="transaction-list",
+    ),
+    path(
         "add/<pinstance_uid>/",
         TransactionCreateAPIView.as_view(),
         name="transaction-create",

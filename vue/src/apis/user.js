@@ -30,4 +30,7 @@ export default {
     instanceList(promo_uid) {
         return Api.get(`qr/instances/${promo_uid}/`, store.getters.headers)
     },
+    transactionList(promo_uid) {
+        return Api.get(`qr/transactions/${promo_uid}/`, store.getters.headers)
+    },
 }
