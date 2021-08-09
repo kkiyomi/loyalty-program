@@ -13,9 +13,19 @@ const routes = [
         component: () => import('/src/views/Dashboard.vue'),
     },
     {
-        path: '/test/:promo_uid',
+        path: '/promo/:promo_uid',
         name: 'test',
         component: () => import('/src/views/Promo.vue'),
+    },
+    {
+        path: '/code/:promo_suid',
+        name: 'Code',
+        component: () => import('/src/views/Code.vue'),
+    },
+    {
+        path: '/instance/:pinstance_uid',
+        name: 'PromoInstance',
+        component: () => import('/src/views/PromoInstance.vue'),
     }
 ]
 

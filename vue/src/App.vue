@@ -3,7 +3,7 @@
     <Header />
     <div
       class="
-        pt-10
+        py-10
         min-h-screen
         h-full
         flex
@@ -37,10 +37,6 @@ export default {
     const getCookies = () => store.dispatch('getCookies')
     getCookies()
 
-    const token = computed(() => store.state.user.token)
-    if (token.value != null) {
-      store.dispatch('getMaker')
-    }
     return {
       darkMode,
     }

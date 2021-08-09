@@ -33,4 +33,10 @@ export default {
     transactionList(promo_uid) {
         return Api.get(`qr/transactions/${promo_uid}/`, store.getters.headers)
     },
+    getInstance(pinstance_uid) {
+        return Api.get(`qr/instance/${pinstance_uid}/`)
+    },
+    addPromoInstance(promo_suid) {
+        return Api.post(`qr/code/${promo_suid}/`, {})
+    },
 }

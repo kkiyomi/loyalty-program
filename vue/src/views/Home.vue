@@ -26,9 +26,9 @@
     <h1>Home</h1>
     <h1>settings : {{ settings }}</h1>
     <h1>token : {{ token }}</h1>
+    <h1>headers : {{ headers }}</h1>
     <h1 v-if="user.user">user : {{ user.user.email }}</h1>
     <div v-if="maker">
-      <h1>headers : {{ headers }}</h1>
       <h1>maker uid: {{ maker.uid }}</h1>
       <br />
       <br />

@@ -16,6 +16,7 @@ export default {
   setup() {
     const store = useStore()
     const maker = computed(() => store.state.qrmaker.maker)
+    store.dispatch('getMaker')
 
     return {
       maker,

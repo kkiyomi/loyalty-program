@@ -1,8 +1,11 @@
+import Cookies from 'js-cookie'
 import user from '../../apis/user'
+
 
 export default {
     state: () => ({
         maker: null,
+        instance: null,
         promos: [],
         instanceList: [],
         transactionList: [],
@@ -26,6 +29,9 @@ export default {
         },
         SET_INSTANCE_LIST(state, payload) {
             state.instanceList = payload
+        },
+        SET_INSTANCE(state, payload) {
+            state.instance = payload
         },
         SET_TRANSACTION_LIST(state, payload) {
             state.transactionList = payload
@@ -74,6 +80,29 @@ export default {
                 commit('SET_TRANSACTION_LIST', response.data)
             })
         },
-
+        async getInstance({ commit }, pinstance_uid) {
+            await user.getInstance(pinstance_uid).then((response) => {
+                commit('SET_INSTANCE', response.data)
+            })
+        },
+        async addPromoInstance({ dispatch }, promo_suid) {
+            await user.addPromoInstance(promo_suid).then((response) => {
+                const pinstance_uid = response.data.uid
+                dispatch('getInstance', pinstance_uid)
+                dispatch('setPromoInstanceCookie', pinstance_uid)
+            })
+        },
+        setPromoInstanceCookie({ }, pinstance_uid) {
+            Cookies.set('pr_instance', pinstance_uid, { secure: true })
+        },
+        delPromoInstanceCookie({ }) {
+            Cookies.remove('pr_instance')
+        },
+        async getPromoInstanceCookie({ dispatch }) {
+            const pr_instance = Cookies.get('pr_instance')
+            if (pr_instance != undefined) {
+                await dispatch('getInstance', pr_instance)
+            }
+        },
     },
 }
