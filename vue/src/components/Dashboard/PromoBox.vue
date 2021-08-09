@@ -118,8 +118,14 @@
       </div>
       <div class="flex justify-between pt-4 relative">
         <div class="flex items-center">
-          <p class="text-sm font-bold m-0 flex">Code {{ item.suid }}</p>
+          <button
+            @click="setItem(item.suid)"
+            class="text-sm font-bold m-0 flex"
+          >
+            Code {{ item.suid }}
+          </button>
         </div>
+        <CodeDialog :item="item.suid" />
         <div v-if="promoEditing == item.uid" class="w-20 z-10">
           <Listbox v-model="selectedSize">
             <div class="relative mt-1">
@@ -289,18 +295,8 @@ import { useStore } from 'vuex'
 import { reactive, ref, computed } from 'vue'
 
 import PromoEditMenu from './PromoEditMenu.vue'
-
-const style2 = {
-  background: 'bg-yellow-100',
-  progressbar: 'bg-yellow-700',
-  text: 'text-yellow-600',
-}
-
-const style = {
-  background: 'bg-gray-200',
-  progressbar: 'bg-indigo-700',
-  text: 'text-indigo-600',
-}
+import style from './Style.js'
+import CodeDialog from './CodeDialog.vue'
 
 export default {
   name: 'PromoBox',
@@ -312,6 +308,7 @@ export default {
     ListboxOption,
     CheckIcon,
     SelectorIcon,
+    CodeDialog,
   },
 
   props: {
@@ -324,7 +321,6 @@ export default {
   },
   setup(props) {
     const store = useStore()
-    const humanizeDate = (date) => date.split('T')[0]
     const promoEditing = computed(() => store.state.settings.promoEditing)
 
     const size = [
@@ -353,19 +349,23 @@ export default {
       store.dispatch('PatchPromo', vdata)
       store.commit('SET_PROMO_EDITING', null)
     }
+    const stopPromoEdit = () => store.commit('SET_PROMO_EDITING', null)
+    const setItem = (payload) => {
+      store.commit('SET_CODE_DIALOG', payload)
+    }
 
     return {
+      setItem,
       promo_data,
-      humanizeDate,
       style,
       promoEditing,
-      stopPromoEdit() {
-        store.commit('SET_PROMO_EDITING', null)
-      },
-
+      stopPromoEdit,
       size,
       selectedSize,
       PatchPromo,
+      humanizeDate(date) {
+        return date.split('T')[0]
+      },
     }
   },
 }

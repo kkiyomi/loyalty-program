@@ -15,6 +15,7 @@
     >
       <router-view />
     </div>
+    <Note />
   </div>
 </template>
 
@@ -24,8 +25,10 @@ import { useStore } from 'vuex'
 import { computed } from 'vue'
 
 import Header from './components/Header/Header.vue'
+import Note from './components/Notification.vue'
+
 export default {
-  components: { Header },
+  components: { Header, Note },
 
   setup() {
     const store = useStore()

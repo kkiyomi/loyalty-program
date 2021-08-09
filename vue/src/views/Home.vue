@@ -1,5 +1,28 @@
 <template>
   <div class="p-2 sm:w-10/12">
+    <div class="inset-0 flex items-center justify-center">
+      <button
+        type="button"
+        @click="openModal"
+        class="
+          px-4
+          py-2
+          text-sm
+          font-medium
+          text-white
+          bg-black
+          rounded-md
+          bg-opacity-20
+          hover:bg-opacity-30
+          focus:outline-none
+          focus-visible:ring-2
+          focus-visible:ring-white
+          focus-visible:ring-opacity-75
+        "
+      >
+        Open dialog
+      </button>
+    </div>
     <h1>Home</h1>
     <h1>settings : {{ settings }}</h1>
     <h1>token : {{ token }}</h1>
@@ -55,6 +78,9 @@ export default {
       user,
       token,
       headers,
+      openModal() {
+        store.commit('SET_NOTI_DIALOG', true)
+      },
     }
   },
 }
