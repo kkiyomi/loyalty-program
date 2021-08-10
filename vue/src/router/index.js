@@ -26,6 +26,11 @@ const routes = [
         path: '/instance/:pinstance_uid',
         name: 'PromoInstance',
         component: () => import('/src/views/PromoInstance.vue'),
+    },
+    {
+        path: '/settings',
+        name: 'Settings',
+        component: () => import('/src/views/Settings.vue'),
     }
 ]
 

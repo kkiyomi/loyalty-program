@@ -202,14 +202,9 @@
                     Logged in as {{ user.email ? user.email : 'XXX' }}
                   </span>
                 </MenuItem>
-                <MenuItem
-                  as="router-link"
-                  v-for="item in settings"
-                  :key="item.name"
-                  v-slot="{ active }"
-                >
+                <MenuItem as="router-link" v-slot="{ active }">
                   <router-link
-                    :to="{ name: item.href }"
+                    :to="{ name: 'Settings' }"
                     custom
                     v-slot="{ href, navigate }"
                   >
@@ -221,7 +216,7 @@
                       :href="href"
                       @click="navigate"
                     >
-                      {{ item.name }}
+                      Settings
                     </a>
                   </router-link>
                 </MenuItem>
@@ -317,7 +312,7 @@ export default {
     const store = useStore()
     const token = computed(() => store.state.user.token)
 
-    const darkMode = computed(() => store.state.user.darkMode)
+    const darkMode = computed(() => store.state.settings.darkMode)
     const setDarkmode = (data) => store.dispatch('setDarkmode', data)
     const switchMode = () => {
       setDarkmode(!darkMode.value)
