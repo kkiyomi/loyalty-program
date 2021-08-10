@@ -18,6 +18,12 @@ export default {
         promo: (state) => (uid) => {
             return state.promos.find((element) => element.uid == uid)
         },
+        promoInstanceCookie(state) {
+            return {
+                promo_suid: state.instance.promo.suid,
+                pinstance_uid: state.instance.uid,
+            }
+        }
     },
 
     mutations: {
@@ -45,6 +51,8 @@ export default {
             commit('SET_INSTANCE_LIST', [])
             commit('SET_TRANSACTION_LIST', [])
         },
+
+
         async getMaker({ commit }) {
             await user.makerInfo().then(response => {
                 const maker = response.data
@@ -55,6 +63,8 @@ export default {
         delMaker({ commit }) {
             commit('SET_MAKER', null)
         },
+
+
         async AddPromo({ dispatch }, data) {
             await user.addPromo(data).then(() => {
                 dispatch('getMaker')
@@ -70,6 +80,8 @@ export default {
                 dispatch('getMaker')
             })
         },
+
+
         async getInstanceList({ commit }, promo_uid) {
             await user.instanceList(promo_uid).then((response) => {
                 commit('SET_INSTANCE_LIST', response.data)
@@ -80,26 +92,20 @@ export default {
                 commit('SET_TRANSACTION_LIST', response.data)
             })
         },
+
+
         async getInstance({ commit }, pinstance_uid) {
             await user.getInstance(pinstance_uid).then((response) => {
                 commit('SET_INSTANCE', response.data)
             })
         },
-        async addPromoInstance({ dispatch }, promo_suid) {
-            await user.addPromoInstance(promo_suid).then((response) => {
-                const pinstance_uid = response.data.uid
-                dispatch('getInstance', pinstance_uid)
-                dispatch('setPromoInstanceCookie', pinstance_uid)
+        async addPromoInstance({ commit }, promo_suid) {
+            await user.addPromoInstance(promo_suid).then(async (response) => {
+                commit('SET_INSTANCE', response.data)
             })
         },
-        setPromoInstanceCookie({ }, pinstance_uid) {
-            Cookies.set('pr_instance', pinstance_uid, { secure: true })
-        },
-        delPromoInstanceCookie({ }) {
-            Cookies.remove('pr_instance')
-        },
-        async getPromoInstanceCookie({ dispatch }) {
-            const pr_instance = Cookies.get('pr_instance')
+        async getPromoInstanceCookie({ dispatch }, promo_suid) {
+            const pr_instance = Cookies.get(promo_suid)
             if (pr_instance != undefined) {
                 await dispatch('getInstance', pr_instance)
             }

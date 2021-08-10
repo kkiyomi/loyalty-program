@@ -178,6 +178,7 @@ export default {
   },
   setup() {
     const store = useStore()
+    const token = computed(() => store.state.user.token)
 
     const moveToSignup = () => {
       store.commit('SET_SIGNIN_DIALOG', false)
@@ -193,6 +194,7 @@ export default {
     const UserLogin = async (data) => {
       await store.dispatch('UserLogin', data)
       store.dispatch('getMaker')
+      store.dispatch('setUserCookie', token.value)
     }
 
     return {

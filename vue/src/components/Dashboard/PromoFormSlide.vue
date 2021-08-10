@@ -140,7 +140,7 @@ export default {
 
   setup() {
     const store = useStore()
-    const darkMode = computed(() => store.state.user.darkMode)
+    const darkMode = computed(() => store.state.settings.darkMode)
 
     const isOpen = ref(false)
     return {

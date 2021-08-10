@@ -3,7 +3,6 @@ import user from '../../apis/user'
 
 export default {
     state: () => ({
-        darkMode: true,
         user: null,
         token: null,
     }),
@@ -19,9 +18,6 @@ export default {
     },
 
     mutations: {
-        SET_DARKMODE(state, payload) {
-            state.darkMode = payload
-        },
         SET_USER(state, payload) {
             state.user = payload
         },
@@ -35,18 +31,9 @@ export default {
             commit('SET_USER', null)
             commit('SET_TOKEN', null)
         },
-        setDarkmode({ commit, dispatch }, dark) {
-            commit('SET_DARKMODE', dark)
-            let theme = 'light'
-            if (dark) {
-                theme = 'dark'
-            }
-            dispatch('setThemeCookie', theme)
-        },
-        UserSignout({ commit, dispatch }) {
+        UserSignout({ commit }) {
             commit('SET_USER', null)
             commit('SET_TOKEN', null)
-            dispatch('delUserCookie')
         },
         async UserLogin({ commit, dispatch }, data) {
             // just to make it clear what data is sent
@@ -57,7 +44,6 @@ export default {
             await user.login(request_data).then(response => {
                 const token = response.data.key
                 commit('SET_TOKEN', token)
-                dispatch('setUserCookie', token)
                 dispatch('UserInfo')
             })
         },
@@ -70,7 +56,6 @@ export default {
             await user.register(request_data).then(response => {
                 const token = response.data.key
                 commit('SET_TOKEN', token)
-                dispatch('setUserCookie', token)
             })
         },
         async UserInfo({ commit }) {
@@ -79,38 +64,13 @@ export default {
                 commit('SET_USER', userA)
             })
         },
-        setUserCookie({ }, token) {
-            Cookies.set('at', token, { secure: true })
-        },
-        delUserCookie({ }) {
-            Cookies.remove('at')
-        },
-        getUserCookie({ commit, dispatch }) {
-            const token = Cookies.get('at')
-            if (token != undefined) {
-                commit('SET_TOKEN', token)
-                dispatch('alreadyLogged')
-            }
-        },
+
         alreadyLogged({ dispatch }) {
             dispatch('UserInfo')
         },
-        setThemeCookie({ }, data) {
-            Cookies.set('theme', data, { secure: true })
-        },
-        getThemeCookie({ commit }) {
-            const theme = Cookies.get('theme')
-            if (theme != undefined) {
-                commit('SET_DARKMODE', theme == 'dark' ? true : false)
-            }
-        },
-        getCookies({ dispatch }) {
-            dispatch('getThemeCookie')
-            dispatch('getUserCookie')
-        },
+
         UserTokenLogin({ commit, dispatch }, token) {
             commit('SET_TOKEN', token)
-            dispatch('setUserCookie', token)
             dispatch('UserInfo')
         },
     },

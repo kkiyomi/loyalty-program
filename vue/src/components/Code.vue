@@ -70,14 +70,21 @@ export default {
     const store = useStore()
     const instance = computed(() => store.state.qrmaker.instance)
 
+    const promoInstanceCookie = computed(
+      () => store.getters.promoInstanceCookie
+    )
+
     const AddPromoInstance = async (promo_suid) => {
       await store.dispatch('addPromoInstance', promo_suid)
+      await store.dispatch('getInstance', promo_suid)
+      store.dispatch('setPromoInstanceCookie', promoInstanceCookie.value)
     }
 
     const test = async () => {
-      await store.dispatch('getPromoInstanceCookie')
+      await store.dispatch('getPromoInstanceCookie', promo_suid)
       if (!instance.value) {
-        AddPromoInstance(promo_suid)
+        await AddPromoInstance(promo_suid)
+        store.dispatch('setPromoInstanceCookie', promoInstanceCookie.value)
       }
     }
     test()

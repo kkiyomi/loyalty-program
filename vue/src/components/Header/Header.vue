@@ -328,6 +328,9 @@ export default {
     const router = useRouter()
     const UserSignout = () => {
       store.dispatch('clearAll')
+      store.dispatch('UserSignout')
+      store.dispatch('delUserCookie')
+      store.dispatch('deleteAllCookies')
       router.push({ name: 'Home' })
     }
 

@@ -26,7 +26,8 @@
     <h1>Home</h1>
     <h1>settings : {{ settings }}</h1>
     <h1>token : {{ token }}</h1>
-    <h1>headers : {{ headers }}</h1>
+    <h1>cook : {{ cook }}</h1>
+    <h1>promo_cookies : {{ promo_cookies }}</h1>
     <h1 v-if="user.user">user : {{ user.user.email }}</h1>
     <div v-if="maker">
       <h1>maker uid: {{ maker.uid }}</h1>
@@ -36,12 +37,16 @@
     </div>
     <button @click="delUserCookie" class="bg-red-500">delete cookie</button>
     <button @click="UserTokenLogin" class="m-10 bg-red-500">login</button>
+    <button @click="deleteAllCookies" class="m-10 bg-red-500">
+      deleteAllCookies
+    </button>
   </div>
 </template>
 
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import Cookies from 'js-cookie'
 
 export default {
   name: 'Home',
@@ -56,11 +61,13 @@ export default {
       const token = '63a9f042049952f3cfa5bc8df35bc91e62d34e30'
       await store.dispatch('UserTokenLogin', token)
       store.dispatch('getMaker')
+      store.dispatch('setUserCookie', token)
     }
 
     const delUserCookie = () => {
       store.dispatch('UserSignout')
       store.dispatch('delMaker')
+      store.dispatch('delUserCookie')
     }
     const maker = computed(() => store.state.qrmaker.maker)
     const promos = computed(() => store.state.qrmaker.maker.promos)
@@ -68,7 +75,17 @@ export default {
 
     const huminizeDate = (date) => date.split('T')[0]
 
+    const cook = Cookies.get()
+
+    const deleteAllCookies = () => store.dispatch('deleteAllCookies')
+
+    store.dispatch('setToStateAllCookies')
+    const promo_cookies = computed(() => store.state.settings.promos)
+
     return {
+      promo_cookies,
+      deleteAllCookies,
+      cook,
       maker,
       UserTokenLogin,
       delUserCookie,

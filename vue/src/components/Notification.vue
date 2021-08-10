@@ -115,7 +115,7 @@ export default {
 
   setup() {
     const store = useStore()
-    const darkMode = computed(() => store.state.user.darkMode)
+    const darkMode = computed(() => store.state.settings.darkMode)
 
     const notiIsOpen = computed(() => store.state.settings.notiIsOpen)
 

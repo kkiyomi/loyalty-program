@@ -171,7 +171,7 @@
 
 <script>
 import { LockClosedIcon } from '@heroicons/vue/solid'
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -181,6 +181,7 @@ export default {
   },
   setup() {
     const store = useStore()
+    const token = computed(() => store.state.user.token)
 
     const moveToSignin = () => {
       store.commit('SET_SIGNUP_DIALOG', false)
@@ -194,7 +195,10 @@ export default {
       password1: '',
       password2: '',
     })
-    const UserRegister = (data) => store.dispatch('UserRegister', data)
+    const UserRegister = (data) => {
+      store.dispatch('UserRegister', data)
+      store.dispatch('setUserCookie', token.value)
+    }
 
     return {
       data,

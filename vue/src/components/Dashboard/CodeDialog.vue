@@ -220,7 +220,6 @@ export default {
     const closeModal = () => {
       open.value = false
       store.commit('SET_CODE_DIALOG', '')
-      store.commit('SET_NOTI_DIALOG', true)
     }
 
     const copy = (code) => {
@@ -232,7 +231,9 @@ export default {
         function (err) {
           console.error('Async: Could not copy text: ', err)
         },
-        closeModal()
+
+        closeModal(),
+        store.commit('SET_NOTI_DIALOG', true)
       )
     }
 
