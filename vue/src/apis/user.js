@@ -16,6 +16,10 @@ export default {
     makerInfo() {
         return Api.get('qr/maker/', store.getters.headers)
     },
+
+    getPromo(promo_uid) {
+        return Api.get(`qr/promo/${promo_uid}/`, store.getters.headers)
+    },
     addPromo(data) {
         return Api.post(`qr/promo/`, data, store.getters.headers)
     },
@@ -27,16 +31,18 @@ export default {
         const data = f_data.data
         return Api.patch(`qr/promo/${promo_uid}/`, data, store.getters.headers)
     },
-    instanceList(promo_uid) {
-        return Api.get(`qr/instances/${promo_uid}/`, store.getters.headers)
-    },
-    transactionList(promo_uid) {
-        return Api.get(`qr/transactions/${promo_uid}/`, store.getters.headers)
+
+    addPromoInstance(promo_suid) {
+        return Api.post(`qr/code/${promo_suid}/`, {})
     },
     getInstance(pinstance_uid) {
         return Api.get(`qr/instance/${pinstance_uid}/`)
     },
-    addPromoInstance(promo_suid) {
-        return Api.post(`qr/code/${promo_suid}/`, {})
+    instanceList(promo_uid) {
+        return Api.get(`qr/instances/${promo_uid}/`, store.getters.headers)
+    },
+
+    transactionList(promo_uid) {
+        return Api.get(`qr/transactions/${promo_uid}/`, store.getters.headers)
     },
 }

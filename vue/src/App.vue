@@ -4,11 +4,13 @@
     <div
       class="
         py-10
-        min-h-screen
-        h-full
         flex
-        place-content-center
+        justify-center
+        w-full
+        h-full
+        min-h-screen
         bg-gray-200
+        text-gray-800
         dark:bg-gray-700
         dark:text-gray-100
       "

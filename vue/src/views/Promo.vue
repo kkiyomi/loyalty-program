@@ -1,9 +1,19 @@
 <template>
-  <div v-if="promo">
-    <div class="flex flex-col items-center space-y-8 w-screen sm:px-4 md:px-8">
+  <div v-if="promo" class="">
+    <div
+      class="
+        flex flex-wrap
+        items-center
+        w-full
+        space-y-8
+        sm:px-4
+        md:px-8
+        sm:max-w-4xl
+      "
+    >
       <PromoDetail />
-      <InstanceTable v-if="instanceList" />
-      <TransactionTable v-if="transactionList" />
+      <InstanceTable />
+      <TransactionTable />
     </div>
   </div>
 </template>
@@ -15,7 +25,7 @@ import InstanceTable from '../components/Promo/InstanceTable.vue'
 import TransactionTable from '../components/Promo/TransactionTable.vue'
 
 import { useStore } from 'vuex'
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 export default {
@@ -26,20 +36,14 @@ export default {
     const store = useStore()
     const promo_uid = route.params.promo_uid
 
-    const promo = computed(() => store.getters.promo(promo_uid))
-    const instanceList = computed(() => store.state.qrmaker.instanceList)
-    const transactionList = computed(() => store.state.qrmaker.transactionList)
+    const getPromo = async () => {
+      await store.dispatch('getPromo', promo_uid)
+    }
 
-    const get_list = onMounted(() => {
-      store.dispatch('getInstanceList', promo_uid)
-      store.dispatch('getTransactionList', promo_uid)
-    })
-
+    getPromo()
+    const promo = computed(() => store.state.qrmaker.promo)
     return {
       promo,
-      instanceList,
-      transactionList,
-      get_list,
     }
   },
 }

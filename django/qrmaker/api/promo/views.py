@@ -14,6 +14,7 @@ class PromoCreateAPIView(generics.CreateAPIView):
 
 
 class PromoUpdateDestroyAPIView(
+    generics.RetrieveAPIView,
     generics.UpdateAPIView,
     generics.DestroyAPIView,
 ):

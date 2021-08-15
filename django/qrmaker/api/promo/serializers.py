@@ -8,6 +8,14 @@ class _InstanceListSerializer(serializers.ModelSerializer):
         model = PromoInstance
         fields = ["title", "uid", "date_added"]
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation["ts_count"] = Transaction.objects.filter(
+            pinstance=instance
+        ).count()
+
+        return representation
+
 
 class PromoCreateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,8 +34,17 @@ class PromoUpdateDestroySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Promo
-        fields = ["title", "description", "size", "state", "uid", "suid", "pinstances"]
-        read_only_fields = ["uid", "suid", "pinstances"]
+        fields = [
+            "title",
+            "description",
+            "size",
+            "state",
+            "uid",
+            "suid",
+            "date_added",
+            "pinstances",
+        ]
+        read_only_fields = ["uid", "suid", "pinstances", "date_added"]
 
     def to_internal_value(self, data):
         for key in data.keys():

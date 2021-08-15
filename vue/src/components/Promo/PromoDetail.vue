@@ -8,7 +8,6 @@
       shadow
       overflow-hidden
       sm:rounded-lg
-      sm:max-w-screen-lg
     "
   >
     <div class="px-4 py-5 sm:px-6">
@@ -52,7 +51,7 @@
         <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-300">Date added</dt>
           <dd class="mt-1 text-sm sm:mt-0 sm:col-span-2">
-            {{ promo.date_added }}
+            {{ humanizeDate(promo.date_added) }}
           </dd>
         </div>
         <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -80,10 +79,15 @@ export default {
     const route = useRoute()
     const promo_uid = route.params.promo_uid
 
-    const promo = computed(() => store.getters.promo(promo_uid))
+    const promo = computed(() => store.state.qrmaker.promo)
 
+    const humanizeDate = (date) => {
+      const test = new Date(date)
+      return test.toLocaleString('en-GB', { timeZone: 'UTC' })
+    }
     return {
       promo,
+      humanizeDate,
     }
   },
 }

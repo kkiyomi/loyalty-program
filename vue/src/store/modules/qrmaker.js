@@ -9,6 +9,7 @@ export default {
         promos: [],
         instanceList: [],
         transactionList: [],
+        promo: null,
     }),
 
     getters: {
@@ -42,6 +43,9 @@ export default {
         SET_TRANSACTION_LIST(state, payload) {
             state.transactionList = payload
         },
+        SET_PROMO(state, payload) {
+            state.promo = payload
+        },
     },
 
     actions: {
@@ -65,6 +69,11 @@ export default {
         },
 
 
+        async getPromo({ commit }, promo_uid) {
+            await user.getPromo(promo_uid).then((response) => {
+                commit('SET_PROMO', response.data)
+            })
+        },
         async AddPromo({ dispatch }, data) {
             await user.addPromo(data).then(() => {
                 dispatch('getMaker')
