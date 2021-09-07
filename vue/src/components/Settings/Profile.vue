@@ -1,25 +1,41 @@
 <template>
   <div>
     <div>
-      <div class="md:grid md:grid-cols-3 md:gap-6">
-        <div class="md:col-span-1">
+      <div class="md:grid md:grid-cols-7 md:gap-6">
+        <div class="md:col-span-2">
           <div class="px-4 sm:px-0">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">Profile</h3>
-            <p class="mt-1 text-sm text-gray-600">
+            <h3
+              class="
+                text-lg
+                font-medium
+                leading-6
+                text-gray-900
+                dark:text-white
+              "
+            >
+              Profile
+            </h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">
               This information will be displayed publicly so be careful what you
               share.
             </p>
           </div>
         </div>
-        <div class="mt-5 md:mt-0 md:col-span-2">
-          <form action="#" method="POST">
+        <div class="mt-5 md:mt-0 md:col-span-5">
+          <div>
             <div class="shadow sm:rounded-md sm:overflow-hidden">
-              <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+              <div class="px-4 py-5 bg-white dark:bg-gray-800 space-y-6 sm:p-6">
                 <div class="grid grid-cols-3 gap-6">
                   <div class="col-span-3 sm:col-span-2">
                     <label
                       for="company-website"
-                      class="block text-sm font-medium text-gray-700"
+                      class="
+                        block
+                        text-sm
+                        font-medium
+                        text-gray-700
+                        dark:text-gray-200
+                      "
                     >
                       Website
                     </label>
@@ -33,6 +49,9 @@
                           border border-r-0 border-gray-300
                           bg-gray-50
                           text-gray-500 text-sm
+                          dark:bg-gray-800
+                          dark:text-gray-300
+                          dark:border-gray-600
                         "
                       >
                         http://
@@ -50,6 +69,10 @@
                           rounded-none rounded-r-md
                           sm:text-sm
                           border-gray-300
+                          dark:bg-gray-800
+                          dark:text-gray-300
+                          dark:border-gray-600
+                          dark:placeholder-gray-300
                         "
                         placeholder="www.example.com"
                       />
@@ -60,7 +83,13 @@
                 <div>
                   <label
                     for="about"
-                    class="block text-sm font-medium text-gray-700"
+                    class="
+                      block
+                      text-sm
+                      font-medium
+                      text-gray-700
+                      dark:text-gray-200
+                    "
                   >
                     About
                   </label>
@@ -79,17 +108,29 @@
                         sm:text-sm
                         border border-gray-300
                         rounded-md
+                        dark:bg-gray-800
+                        dark:text-gray-300
+                        dark:border-gray-600
+                        dark:placeholder-gray-300
                       "
                       placeholder="you@example.com"
                     />
                   </div>
-                  <p class="mt-2 text-sm text-gray-500">
+                  <p class="mt-2 text-sm text-gray-500 dark:text-gray-200">
                     Brief description for your profile. URLs are hyperlinked.
                   </p>
                 </div>
 
                 <div>
-                  <label class="block text-sm font-medium text-gray-700">
+                  <label
+                    class="
+                      block
+                      text-sm
+                      font-medium
+                      text-gray-700
+                      dark:text-gray-200
+                    "
+                  >
                     Photo
                   </label>
                   <div class="mt-1 flex items-center">
@@ -138,7 +179,15 @@
                 </div>
 
                 <div>
-                  <label class="block text-sm font-medium text-gray-700">
+                  <label
+                    class="
+                      block
+                      text-sm
+                      font-medium
+                      text-gray-700
+                      dark:text-gray-300
+                    "
+                  >
                     Cover photo
                   </label>
                   <div
@@ -202,7 +251,17 @@
                   </div>
                 </div>
               </div>
-              <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+              <div
+                class="
+                  px-4
+                  py-3
+                  text-right
+                  bg-gray-50
+                  dark:bg-gray-800
+                  dark:border-t dark:border-gray-700
+                  sm:px-6
+                "
+              >
                 <button
                   type="submit"
                   class="
@@ -226,14 +285,8 @@
                 </button>
               </div>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="hidden sm:block" aria-hidden="true">
-      <div class="py-5">
-        <div class="border-t border-gray-200" />
       </div>
     </div>
   </div>

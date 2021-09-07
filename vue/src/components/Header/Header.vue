@@ -1,6 +1,5 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <Disclosure as="nav" class="bg-gray-100 dark:bg-gray-800" v-slot="{ open }">
+  <Disclosure as="nav" class="bg-gray-200 dark:bg-gray-800" v-slot="{ open }">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -52,7 +51,7 @@
                   :class="[
                     isActive
                       ? 'bg-gray-900 text-white'
-                      : 'text-gray-900 dark:text-gray-400 hover:bg-gray-700 hover:text-white',
+                      : 'text-gray-900 dark:text-gray-400 hover:bg-gray-700 hover:text-white dark:hover:text-white',
                     'px-3 py-2 rounded-md text-sm font-medium',
                   ]"
                   :href="href"
@@ -72,7 +71,7 @@
                   :class="[
                     isActive
                       ? 'bg-gray-900 text-white'
-                      : 'text-gray-900 dark:text-gray-400 hover:bg-gray-700 hover:text-white',
+                      : 'text-gray-900 dark:text-gray-400 hover:bg-gray-700 hover:text-white dark:hover:text-white',
                     'px-3 py-2 rounded-md text-sm font-medium',
                   ]"
                   :href="href"
@@ -241,9 +240,7 @@
     <DisclosurePanel class="sm:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1">
         <router-link
-          v-for="item in navigation"
-          :key="item.name"
-          :to="{ name: item.href }"
+          :to="{ name: 'Home' }"
           custom
           v-slot="{ href, navigate, isActive }"
         >
@@ -258,7 +255,27 @@
             @click="navigate"
             :aria-current="isActive ? 'page' : undefined"
           >
-            {{ item.name }}
+            Home
+          </a>
+        </router-link>
+        <router-link
+          :to="{ name: 'Dashboard' }"
+          v-if="token"
+          custom
+          v-slot="{ href, navigate, isActive }"
+        >
+          <a
+            :class="[
+              isActive
+                ? 'bg-gray-900 text-white'
+                : 'text-gray-900 dark:text-gray-400  hover:bg-gray-700 hover:text-white',
+              'block px-3 py-2 rounded-md text-base font-medium',
+            ]"
+            :href="href"
+            @click="navigate"
+            :aria-current="isActive ? 'page' : undefined"
+          >
+            Dashboard
           </a>
         </router-link>
       </div>
@@ -276,6 +293,7 @@ import {
   MenuItem,
   MenuItems,
 } from '@headlessui/vue'
+
 import {
   SunIcon,
   MoonIcon,

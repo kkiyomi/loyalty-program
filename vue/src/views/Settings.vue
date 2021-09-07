@@ -1,12 +1,24 @@
 <template>
-  <div class="grid grid-cols-7 w-full h-full sm:p-4 gap-6 lg:max-w-6xl">
-    <div class="col-span-7 md:col-span-1 text-lg font-medium leading-6">
-      <div>Account</div>
-      <div>Profile</div>
+  <div class="grid grid-cols-5 w-full h-full sm:p-4 gap-6 lg:px-16">
+    <div class="col-span-5 md:col-span-1 leading-6 dark:text-white">
+      <button
+        v-for="item in tabs"
+        :key="item.index"
+        class="block p-2 my-2 rounded-md w-full text-sm text-left"
+        :class="
+          activeTab === item.tabName
+            ? 'bg-gray-300 dark:text-gray-900'
+            : 'hover:bg-gray-300 dark:hover:bg-gray-500 '
+        "
+        @click="activeTab = item.tabName"
+      >
+        {{ item.title }}
+      </button>
     </div>
-    <div class="col-span-7 md:col-span-6">
-      <Account v-if="account" />
-      <Profile v-if="profile" />
+
+    <div class="col-span-5 md:col-span-4">
+      <Account v-if="activeTab === 'account'" />
+      <Profile v-if="activeTab === 'profile'" />
     </div>
   </div>
 </template>
@@ -16,7 +28,7 @@
 import Account from '../components/Settings/Account.vue'
 import Profile from '../components/Settings/Profile.vue'
 
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
   name: 'SettingsView',
   components: {
@@ -24,14 +36,15 @@ export default {
     Profile,
   },
   setup() {
-    const account = ref(true)
-    const profile = ref(false)
-    const notification = ref(false)
+    const activeTab = ref('account')
+    const tabs = reactive([
+      { title: 'Account', tabName: 'account' },
+      { title: 'Profile', tabName: 'profile' },
+    ])
 
     return {
-      account,
-      profile,
-      notification,
+      activeTab,
+      tabs,
     }
   },
 }
