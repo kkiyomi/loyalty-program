@@ -1,4 +1,4 @@
-import Api from './Api'
+import Api from './api'
 import store from '../store'
 
 const END_POINT = 'user/auth'
