@@ -168,7 +168,7 @@
 
 <script>
 import { LockClosedIcon } from '@heroicons/vue/solid'
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -191,8 +191,8 @@ export default {
       email: '',
       password: '',
     })
-    const UserLogin = async (data) => {
-      await store.dispatch('UserLogin', data)
+    const UserLogin = async (user_data) => {
+      await store.dispatch('UserLogin', user_data)
       store.dispatch('getMaker')
       store.dispatch('setUserCookie', token.value)
     }
